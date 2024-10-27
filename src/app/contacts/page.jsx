@@ -21,7 +21,7 @@ const Page = () => {
     
 
     fetchContacts();
-  }, []);
+  }, [fetchContacts]);
 
   const handleDelete = async (id) => {
     try {

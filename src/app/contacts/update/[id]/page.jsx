@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { use } from 'react';
 
-const page = ({ params }) => {
+const Page = ({ params }) => {
     const router = useRouter();
 
     // Unwrap `params` to get the actual values
@@ -25,7 +25,7 @@ const page = ({ params }) => {
 
     useEffect(() => {
         fetchContacts();
-    }, []);
+    }, [fetchContacts]);
 
     const handleAddContact = async (e) => {
         e.preventDefault();
@@ -99,4 +99,4 @@ const page = ({ params }) => {
     );
 };
 
-export default page;
+export default Page;
