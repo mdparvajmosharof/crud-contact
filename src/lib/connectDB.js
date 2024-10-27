@@ -5,7 +5,7 @@ let db;
 export const connectDB = async ()=>{
     if(db) return db;
     try {
-        const uri = `mongodb+srv://${process.env.DB_User}:${process.env.DB_Password}@cluster0.8srq6fs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+        const uri = `mongodb+srv://${process.env.NEXT_PUBLIC_DB_USER}:${process.env.NEXT_PUBLIC_DB_PASS}@cluster0.8srq6fs.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
         const client = new MongoClient(uri, {
             serverApi: {

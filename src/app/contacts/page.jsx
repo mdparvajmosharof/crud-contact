@@ -1,44 +1,42 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 
 const Page = () => {
   const [contacts, setContacts] = useState([]);
 
-  const fetchContacts = async () => {
+  const fetchContacts = useCallback(async () => {
     try {
-      const res = await fetch("http://localhost:3000/contacts/api/get-all");
-
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/contacts/api/get-all`);
       const data = await res.json();
       setContacts(data?.contacts || []);
     } catch (error) {
       console.error("Error fetching contacts:", error);
+      return [];
     }
-  };
+  }, []); // No dependencies here as this function doesn't rely on any props/state
 
   useEffect(() => {
-    // Fetch contacts when component mounts
-    
-
     fetchContacts();
   }, [fetchContacts]);
 
   const handleDelete = async (id) => {
     try {
-      const deleted = await fetch(`http://localhost:3000/contacts/api/delete/${id}`, {
+      const deleted = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/contacts/api/delete/${id}`, {
         method: "DELETE",
       });
       const resp = await deleted.json();
-        console.log(deleted)
-        console.log(resp)
+      console.log(deleted);
+      console.log(resp);
 
-        if(resp?.response?.deletedCount>0){
-          fetchContacts();
-        }else {
+      if (resp?.response?.deletedCount > 0) {
+        fetchContacts();
+      } else {
         console.error("Failed to delete contact:", resp.message);
       }
     } catch (error) {
       console.error("Error deleting contact:", error);
+      return [];
     }
   };
 
@@ -63,8 +61,9 @@ const Page = () => {
               <td>{contact.phone}</td>
               <td>{contact.email}</td>
               <td>
-                <Link href={`contacts/update/${contact._id}`}><button  className="btn">Edit</button></Link>
-                
+                <Link href={`contacts/update/${contact._id}`}>
+                  <button className="btn">Edit</button>
+                </Link>
               </td>
               <td>
                 <button onClick={() => handleDelete(contact._id)} className="btn">

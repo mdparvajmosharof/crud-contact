@@ -1,27 +1,24 @@
 "use client";
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
-import { use } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 const Page = ({ params }) => {
     const router = useRouter();
+    const { id } = params; // Directly destructure `id` from `params`
 
-    // Unwrap `params` to get the actual values
-    const unwrappedParams = use(params);
-    const { id } = unwrappedParams; // Destructure the ID once unwrapped
+    const [contacts, setContacts] = useState({});
 
-    const [contacts, setContacts] = useState([]);
-
-    const fetchContacts = async () => {
+    // Memoize fetchContacts to prevent unnecessary re-renders
+    const fetchContacts = useCallback(async () => {
         try {
-            const res = await fetch(`http://localhost:3000/contacts/api/delete/${id}`);
+            const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/contacts/api/delete/${id}`);
             const data = await res.json();
             console.log(data.data);
             setContacts(data.data);
         } catch (error) {
             console.error("Error fetching contacts:", error);
         }
-    };
+    }, [id]); // Only re-run if `id` changes
 
     useEffect(() => {
         fetchContacts();
@@ -35,7 +32,7 @@ const Page = ({ params }) => {
             phone: e.target.phone.value,
         };
 
-        const resp = await fetch(`http://localhost:3000/contacts/api/delete/${id}`, {
+        const resp = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/contacts/api/delete/${id}`, {
             method: "PATCH",
             body: JSON.stringify(newContact),
             headers: {

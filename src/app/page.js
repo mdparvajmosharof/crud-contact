@@ -1,4 +1,4 @@
-import Image from "next/image";
+export const dynamic = "force-dynamic"
 import Link from "next/link";
 
 export default function Home() {

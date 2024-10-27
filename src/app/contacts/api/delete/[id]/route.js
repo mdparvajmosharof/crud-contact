@@ -1,5 +1,6 @@
 import { connectDB } from "@/lib/connectDB";
 import { ObjectId } from "mongodb";
+import { NextResponse } from "next/server";
 
 export const DELETE = async (request, { params }) => {
   try {
@@ -9,12 +10,12 @@ export const DELETE = async (request, { params }) => {
     const res = await contactCollection.deleteOne({
       _id: new ObjectId(params.id),
     });
-    return Response.json(
+    return NextResponse.json(
       { message: "Deleted contact", response: res },
       { status: 200 }
     );
   } catch (error) {
-    return Response.json({ message: "Something went wrong" }, { status: 500 });
+    return NextResponse.json({ message: "Something went wrong" }, { status: 500 });
   }
 };
 
@@ -34,9 +35,9 @@ export const PATCH = async (request, { params }) => {
         upsert: true,
       }
     );
-    return Response.json({ message: "updated the booking", response: resp });
+    return NextResponse.json({ message: "updated the booking", response: resp });
   } catch (error) {
-    return Response.json({ message: "Something Went Wrong" });
+    return NextResponse.json({ message: "Something Went Wrong" });
   }
 };
 
