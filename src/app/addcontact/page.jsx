@@ -1,8 +1,10 @@
 "use client"
+import { useRouter } from 'next/navigation'
 import React from 'react'
 
 
 const page = () => {
+    const router = useRouter();
 
     const handleAddContact = async (e) => {
         e.preventDefault();
@@ -22,11 +24,12 @@ const page = () => {
 
         if (resp.status === 200) {
             e.target.reset();
+            router.push('/contacts')
         }
     }
 
     return (
-        <div className="container px-24 mx-auto py-24">
+        <div className="">
             <div className="flex items-center  justify-center">
 
                 <div className="w-1/2 p-12">

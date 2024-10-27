@@ -1,17 +1,22 @@
-"use client"
+"use client";
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
+import { use } from 'react';
 
+const page = ({ params }) => {
+    const router = useRouter();
 
-const page = ({params}) => {
+    // Unwrap `params` to get the actual values
+    const unwrappedParams = use(params);
+    const { id } = unwrappedParams; // Destructure the ID once unwrapped
 
     const [contacts, setContacts] = useState([]);
 
     const fetchContacts = async () => {
         try {
-            const res = await fetch(`http://localhost:3000/contacts/api/delete/${params.id}`);
-
+            const res = await fetch(`http://localhost:3000/contacts/api/delete/${id}`);
             const data = await res.json();
-            console.log(data.data)
+            console.log(data.data);
             setContacts(data.data);
         } catch (error) {
             console.error("Error fetching contacts:", error);
@@ -20,7 +25,7 @@ const page = ({params}) => {
 
     useEffect(() => {
         fetchContacts();
-      }, []);
+    }, []);
 
     const handleAddContact = async (e) => {
         e.preventDefault();
@@ -28,30 +33,29 @@ const page = ({params}) => {
             name: e.target.name.value,
             email: e.target.email.value,
             phone: e.target.phone.value,
-        }
+        };
 
-        const resp = await fetch(`http://localhost:3000/contacts/api/delete/${params.id}`, {
+        const resp = await fetch(`http://localhost:3000/contacts/api/delete/${id}`, {
             method: "PATCH",
             body: JSON.stringify(newContact),
             headers: {
                 "content-type": "application/json",
             }
-        })
+        });
 
         if (resp.status === 200) {
             fetchContacts();
             e.target.reset();
+            router.push("/contacts");
         }
-        
-    }
+    };
 
     return (
-        <div className="container px-24 mx-auto py-24">
-            <div className="flex items-center  justify-center">
-
+        <div className="">
+            <div className="flex items-center justify-center">
                 <div className="w-1/2 p-12">
                     <h6 className="text-3xl font-semibold text-primary text-center mb-12">
-                        Update contact
+                        Update Contact
                     </h6>
                     <form onSubmit={handleAddContact} action="">
                         <label htmlFor="email">Name</label> <br />
@@ -59,27 +63,26 @@ const page = ({params}) => {
                             defaultValue={contacts.name}
                             type="text"
                             name="name"
-                            placeholder="your name"
+                            placeholder="Your name"
                             className="mt-3 w-full input input-bordered"
                         />
                         <br /> <br />
 
-
-                        <label htmlFor="phone">phone</label> <br />
+                        <label htmlFor="phone">Phone</label> <br />
                         <input
-                        defaultValue={contacts.phone}
+                            defaultValue={contacts.phone}
                             type="text"
                             name="phone"
-                            placeholder="your phone"
+                            placeholder="Your phone"
                             className="w-full mt-3 input input-bordered"
                         />
                         <br /> <br />
                         <label htmlFor="email">Email</label> <br />
                         <input
-                        defaultValue={contacts.email}
+                            defaultValue={contacts.email}
                             type="text"
                             name="email"
-                            placeholder="your email"
+                            placeholder="Your email"
                             className="mt-3 w-full input input-bordered"
                         />
                         <br />
@@ -90,11 +93,10 @@ const page = ({params}) => {
                             Update Contact
                         </button>
                     </form>
-
                 </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default page
+export default page;

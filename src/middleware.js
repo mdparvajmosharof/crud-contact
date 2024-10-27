@@ -12,5 +12,5 @@ export const middleware = async (request) => {
 };
 
 export const config = {
-  matcher: ["/contacts/:path*", "/addcontacts/:path*",],
+  matcher: ["/contacts/:path*", "/addcontact",],
 };

@@ -1,8 +1,10 @@
 "use client"
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React from 'react'
 
 const page = () => {
+    const router = useRouter();
 
     const handleSignUp = async (e) => {
         e.preventDefault();
@@ -22,13 +24,14 @@ const page = () => {
 
         if (resp.status === 200) {
             e.target.reset();
+            router.push('/api/auth/signin')
           }
     }
     return (
-        <div className="container px-24 mx-auto py-24">
-            <div className="flex items-center border justify-center">
+        <div className="mt-3">
+            <div className="flex items-center mt-0 justify-center">
 
-                <div className="w-1/2 p-12">
+                <div className="w-1/2 p-12 border rounded-md">
                     <h6 className="text-3xl font-semibold text-primary text-center mb-12">
                         Sign Up
                     </h6>
