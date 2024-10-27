@@ -68,7 +68,7 @@ const page = () => {
                         <h6 className="my-12 text-center">or sign in with</h6>
                         <h6 className="my-12 text-center">
                             Already have account ?{" "}
-                            <Link className="text-primary font-semibold" href={"/login"}>
+                            <Link className="text-primary font-semibold" href={"/api/auth/signin"}>
                                 Sign In
                             </Link>
                         </h6>
