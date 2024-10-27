@@ -1,5 +1,6 @@
 "use client"
 import { signOut, useSession } from 'next-auth/react'
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 
@@ -15,10 +16,24 @@ const Navbar = () => {
     return (
         <div className="navbar bg-base-100">
             <div className="flex-1">
-                <a className="btn btn-ghost text-xl">daisyUI</a>
+                <a className="btn btn-ghost text-xl" href='/'>Conto</a>
             </div>
             <div className="flex-none">
-                <div className="dropdown dropdown-end">
+
+                    <Link href={"/contacts"}>
+                <button className='btn'>
+                    Contacts
+                </button>
+                    </Link>
+                    <Link href={"/addcontact"}>
+                <button className='btn'>
+                    Add Contact
+                </button>
+                    </Link>
+                <Link href={"/signup"}><button className='btn'>
+                    Register</button></Link>
+
+                {/* <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
                         <div className="indicator">
                             <svg
@@ -47,8 +62,8 @@ const Navbar = () => {
                             </div>
                         </div>
                     </div>
-                </div>
-                <div className="dropdown dropdown-end">
+                </div> */}
+                {/* <div className="dropdown dropdown-end">
                     <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                         <div className="w-10 rounded-full">
                             <img
@@ -70,7 +85,9 @@ const Navbar = () => {
                     </ul>
 
 
-                </div>
+                </div> */}
+
+
                 {session?.status === 'unauthenticated' && <button className='btn' onClick={handler}>Log In</button>
                 }
                 {session?.status === 'authenticated' &&
