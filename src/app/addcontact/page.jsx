@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 import React from 'react'
 
 
-const page = () => {
+export default Page = () => {
     const router = useRouter();
 
     const handleAddContact = async (e) => {
@@ -77,4 +77,3 @@ const page = () => {
     )
 }
 
-export default page
